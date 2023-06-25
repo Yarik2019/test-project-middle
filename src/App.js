@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
 
+import './App.css';
+import ListUsers from './components/ListUsers/ListUsers';
+import { useGetUsersByNameQuery } from './sservices/users';
+import Loading from './components/Loading/Loading';
 function App() {
+  const { data, error, isLoading } = useGetUsersByNameQuery('users');
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    {error ? (
+      <>Oh no, there was an error</>
+    ) : isLoading ? (
+      <Loading/>
+    ) : data ? (
+       <>
+        <ListUsers data={data} className="list-users"/>
+      </> 
+     ) : null} 
+  </div>
   );
 }
 
